@@ -1,0 +1,5 @@
+vim.keymap.set("n", "<leader>tt", vim.cmd.TestNearest, {silent = true})
+vim.keymap.set("n", "<leader>T", vim.cmd.TestFile, {silent = true})
+vim.keymap.set("n", "<leader>a", vim.cmd.TestSuite, {silent = true})
+vim.keymap.set("n", "<leader>l", vim.cmd.TestLast, {silent = true})
+vim.keymap.set("n", "<leader>g", vim.cmd.TestVisit, {silent = true})

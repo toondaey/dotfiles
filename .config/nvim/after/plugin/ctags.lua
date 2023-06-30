@@ -1,0 +1,13 @@
+-- vim.g.tagbar_type_rust = {}
+
+--vim.g["tagbar_type_rust.ctagstype"] = 'rust'
+--vim.g.kinds = {
+    --'T:types,type definitions',
+    --'f:functions,function definitions',
+    --'g:enum,enumeration names',
+    --'s:structure names',
+    --'m:modules,module names',
+    --'c:consts,static constants',
+    --'t:traits',
+    --'i:impls,trait implementations',
+--}
