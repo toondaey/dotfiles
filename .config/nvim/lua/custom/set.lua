@@ -32,6 +32,7 @@ vim.opt.updatetime = 50
 vim.opt.encoding = "utf-8"
 vim.opt.backspace = "indent,eol,start"
 vim.opt.mouse = "a"
+vim.opt.mousemoveevent = true
 vim.cmd([[
   syntax enable
 ]])

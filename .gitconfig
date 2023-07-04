@@ -1,0 +1,31 @@
+[user]
+	name = Babatunde Aromire
+	email = babatunde.aromire@cognite.com
+	signingkey = 46C5E7B4EEBE07205D503C1A3F04E0F6DFEA606F
+[push]
+	autoSetupRemote = true
+[gpg]
+	program = /usr/local/bin/gpg
+[core]
+    pager = delta
+	editor = nvim
+
+[interactive]
+    diffFilter = delta --color-only --features=interactive
+
+[delta]
+    features = decorations
+
+[delta "interactive"]
+    keep-plus-minus-markers = false
+
+[delta "decorations"]
+    commit-decoration-style = blue ol
+    commit-style = raw
+    file-style = omit
+    hunk-header-decoration-style = blue box
+    hunk-header-file-style = red
+    hunk-header-line-number-style = "#067a00"
+    hunk-header-style = file line-number syntax
+[url "ssh://git@github.com/"]
+        insteadOf = https://github.com/

@@ -1,4 +1,4 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
+-- -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 
 -- Only required if you have packer configured as `opt`
 vim.cmd([[packadd packer.nvim]])
@@ -63,7 +63,6 @@ return require("packer").startup(function(use)
 			require("barbecue").setup()
 		end,
 	})
-	use({ "preservim/tagbar" })
 	use("m4xshen/autoclose.nvim")
 	use("editorconfig/editorconfig-vim")
 	--use { 'tamton-aquib/flirt.nvim' }
@@ -135,27 +134,20 @@ return require("packer").startup(function(use)
 	use({ "stevearc/dressing.nvim" })
 	use({ "nvim-telescope/telescope-ui-select.nvim" })
 	use("timonv/vim-cargo")
-	use({
-		"xeluxee/competitest.nvim",
-		requires = "MunifTanjim/nui.nvim",
-		config = function()
-			require("competitest").setup()
-		end,
-	})
 	use({ "lewis6991/gitsigns.nvim" })
 	use({
 		"kevinhwang91/nvim-ufo",
 		requires = {
 			"kevinhwang91/promise-async",
-			{ "luukvbaal/statuscol.nvim" },
 		},
 	})
+    use { "luukvbaal/statuscol.nvim" }
 	use({
 		"akinsho/git-conflict.nvim",
 		tag = "*",
 	})
 	use({ "tpope/vim-rhubarb" })
-    use({ "m4xshen/smartcolumn.nvim" })
+	use({ "m4xshen/smartcolumn.nvim" })
 	-- use { 'mfussenegger/nvim-dap' }
 	use({ "simrat39/rust-tools.nvim" })
 	use({
@@ -239,4 +231,9 @@ return require("packer").startup(function(use)
 		end,
 		dependencies = { { "nvim-tree/nvim-web-devicons" } },
 	})
+	use({
+		"nvim-lualine/lualine.nvim",
+		requires = { "nvim-tree/nvim-web-devicons", opt = true },
+	})
+	use({ "akinsho/bufferline.nvim", tag = "*", requires = "nvim-tree/nvim-web-devicons" })
 end)
