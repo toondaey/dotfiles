@@ -42,7 +42,7 @@ vim.keymap.set("n", "<C-s>", [[:w<CR>]], {silent = true})
 vim.keymap.set("i", "<C-s>", [[<Esc>:w<CR>==gi]], {silent = true, noremap = true})
 vim.keymap.set("v", "<C-s>", [[<Esc>:w<CR>gv=gv]], {silent = true, noremap = true})
 -- Save all files
-vim.keymap.set("n", "<C-A-s>", [[:wa<CR>]], {silent = true})
+vim.keymap.set("n", "<C-A-s>", [[:wa<CR>]], {silent = true, noremap = true})
 vim.keymap.set("i", "<C-A-s>", [[<Esc>:wa<CR>==gi]], {silent = true, noremap = true})
 vim.keymap.set("v", "<C-A-s>", [[<Esc>:wa<CR>gv=gv]])
 

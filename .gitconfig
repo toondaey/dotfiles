@@ -29,3 +29,5 @@
     hunk-header-style = file line-number syntax
 [url "ssh://git@github.com/"]
         insteadOf = https://github.com/
+[alias]
+	commit = commit -S

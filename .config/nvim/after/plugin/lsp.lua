@@ -12,12 +12,24 @@ lsp.ensure_installed({
 	"rust_analyzer",
 	"eslint",
 	"pyright",
-    "omnisharp",
+	"omnisharp",
 })
 
 -- (Optional) Configure lua language server for neovim
 lsp.nvim_workspace()
 
+require("lsp-lens").setup({
+	enable = true,
+	include_declaration = false, -- Reference include declaration
+	sections = { -- Enable / Disable specific request
+		definition = true,
+		references = true,
+		implementation = true,
+	},
+	ignore_filetype = {
+		"prisma",
+	},
+})
 local cmp = require("cmp")
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lsp.defaults.cmp_mappings({
@@ -53,8 +65,10 @@ lsp.configure("lua_ls", {
 	on_attach = function(c, b)
 		ih.on_attach(c, b)
 	end,
-	diagnostics = {
-		globals = { "vim" },
+	Lua = {
+		diagnostics = {
+			globals = { "vim" },
+		},
 	},
 })
 
@@ -139,10 +153,24 @@ lsp.configure("omnisharp", {
 				"regexp",
 			},
 		}
+        ih.on_attach(client, buffer)
 	end,
 	handlers = {
 		["textDocument/definition"] = require("omnisharp_extended").handler,
+        -- ["textDocument/inlahHint"] = function (client)
+        --     local params = vim.lsp.util.make_position_params(0, client.offset_encoding)
+
+        --     local handler = function(err, result, ctx, config)
+        --       ctx.params = params
+        --       print(ctx)
+        --     end
+        --     client.request('textDocument/inlahHint', params, handler)
+        -- end
 	},
+    organize_imports_on_format = true,
+    -- csharp = {
+    --     inlayHints = {parameters = {enabled = true }}
+    -- }
 })
 
 rt.setup({
@@ -214,7 +242,7 @@ lsp.format_mapping("gq", {
 		timeout_ms = 10000,
 	},
 	servers = {
-        ["null-ls"] = { "javascript", "typescript", "lua", "python", "csharp", "go" },
+		["null-ls"] = { "javascript", "typescript", "lua", "python", "csharp", "go" },
 	},
 })
 
@@ -222,8 +250,12 @@ lsp.setup()
 
 ----------- Linting---------------------
 local null_ls = require("null-ls")
+local null_opts = lsp.build_options('null-ls', {})
 
 null_ls.setup({
+    on_attach = function (c, b)
+        null_opts.on_attach(c, b)
+    end,
 	sources = {
 		null_ls.builtins.code_actions.refactoring,
 		null_ls.builtins.completion.spell,
@@ -233,7 +265,7 @@ null_ls.setup({
 		null_ls.builtins.formatting.black.with({ prefer_local = ".venv/bin" }),
 		null_ls.builtins.formatting.rustfmt,
 		null_ls.builtins.formatting.csharpier,
-        null_ls.builtins.formatting.goimports_reviser,
+		null_ls.builtins.formatting.goimports_reviser,
 
 		null_ls.builtins.diagnostics.eslint,
 		null_ls.builtins.diagnostics.mypy.with({ prefer_local = ".venv/bin" }),
@@ -244,7 +276,7 @@ null_ls.setup({
 		null_ls.builtins.diagnostics.dotenv_linter,
 		null_ls.builtins.diagnostics.editorconfig_checker,
 		null_ls.builtins.diagnostics.hadolint,
-        null_ls.builtins.diagnostics.golangci_lint,
+		null_ls.builtins.diagnostics.golangci_lint,
 	},
 })
 

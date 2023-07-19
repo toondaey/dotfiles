@@ -141,7 +141,7 @@ return require("packer").startup(function(use)
 			"kevinhwang91/promise-async",
 		},
 	})
-    use { "luukvbaal/statuscol.nvim" }
+	use({ "luukvbaal/statuscol.nvim" })
 	use({
 		"akinsho/git-conflict.nvim",
 		tag = "*",
@@ -236,4 +236,7 @@ return require("packer").startup(function(use)
 		requires = { "nvim-tree/nvim-web-devicons", opt = true },
 	})
 	use({ "akinsho/bufferline.nvim", tag = "*", requires = "nvim-tree/nvim-web-devicons" })
+	use({ "VidocqH/lsp-lens.nvim" })
+    use ({ 'nvim-telescope/telescope-media-files.nvim', requires = {'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim'}})
+    use ('mattn/emmet-vim')
 end)
