@@ -31,7 +31,8 @@ brew install \
     gh \
     llvm \
     tmux \
-    pyenv
+    pyenv \
+    dotenv-linter
 
 pip install \
     neovim \
