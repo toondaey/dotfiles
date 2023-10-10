@@ -9,13 +9,13 @@ return require("packer").startup(function(use)
 
 	use({
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.1",
+		tag = "0.1.2",
 		-- or                            , branch = '0.1.x',
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
 
 	use({ "catppuccin/nvim", as = "catppuccin" })
-	use("nvim-treesitter/nvim-treesitter", { run = ":TSUpdate" })
+	-- use("nvim-treesitter/nvim-treesitter", { run = ":TSUpdate'" })
 	use({ "nvim-treesitter/playground" })
 	use({ "ThePrimeagen/harpoon" })
 	use({ "mbbill/undotree" })
@@ -208,17 +208,14 @@ return require("packer").startup(function(use)
 		requires = "nvim-lua/plenary.nvim",
 	})
 	use({ "jay-babu/mason-null-ls.nvim" })
-	use({
-		"pwntester/octo.nvim",
-		requires = {
-			"nvim-lua/plenary.nvim",
-			"nvim-telescope/telescope.nvim",
-			"nvim-tree/nvim-web-devicons",
-		},
-		config = function()
-			require("octo").setup()
-		end,
-	})
+    use({
+        "pwntester/octo.nvim",
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope.nvim",
+            "nvim-tree/nvim-web-devicons",
+        }
+    })
 	use("qnighy/lalrpop.vim")
 	use("Decodetalkers/csharpls-extended-lsp.nvim")
 	use({
@@ -239,4 +236,5 @@ return require("packer").startup(function(use)
 	use({ "VidocqH/lsp-lens.nvim" })
     use ({ 'nvim-telescope/telescope-media-files.nvim', requires = {'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim'}})
     use ('mattn/emmet-vim')
+    use "lukas-reineke/indent-blankline.nvim"
 end)

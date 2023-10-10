@@ -60,7 +60,7 @@ telescope.setup({
 		project = {
 			base_dirs = {
 				{ "~/Work", max_depth = 2 },
-				{ "~/Tunde", max_depth = 3 },
+                { "~/Tunde", max_depth = 1 },
 			},
 			hidden_files = true,
 		},

@@ -30,4 +30,6 @@
 [url "ssh://git@github.com/"]
         insteadOf = https://github.com/
 [alias]
-	commit = commit -S
+	com = commit -S -s -a
+	pul = pull -S --signoff --rebase
+	mer = merge -S --signoff

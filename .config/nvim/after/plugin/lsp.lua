@@ -1,4 +1,4 @@
--- Learn the keybindings, see :help lsp-zero-keybindings
+-- Learn the keybindings, see :help lsp-zero-
 -- Learn to configure LSP servers, see :help lsp-zero-api-showcase
 local lsp = require("lsp-zero")
 local ih = require("lsp-inlayhints")
@@ -18,18 +18,18 @@ lsp.ensure_installed({
 -- (Optional) Configure lua language server for neovim
 lsp.nvim_workspace()
 
-require("lsp-lens").setup({
-	enable = true,
-	include_declaration = false, -- Reference include declaration
-	sections = { -- Enable / Disable specific request
-		definition = true,
-		references = true,
-		implementation = true,
-	},
-	ignore_filetype = {
-		"prisma",
-	},
-})
+-- require("lsp-lens").setup({
+--     enable = true,
+--     include_declaration = false, -- Reference include declaration
+--     sections = { -- Enable / Disable specific request
+--         definition = true,
+--         references = true,
+--         implementation = true,
+--     },
+--     ignore_filetype = {
+--         "prisma",
+--     },
+-- })
 local cmp = require("cmp")
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lsp.defaults.cmp_mappings({
@@ -153,30 +153,31 @@ lsp.configure("omnisharp", {
 				"regexp",
 			},
 		}
-        ih.on_attach(client, buffer)
+		ih.on_attach(client, buffer)
 	end,
 	handlers = {
 		["textDocument/definition"] = require("omnisharp_extended").handler,
-        -- ["textDocument/inlahHint"] = function (client)
-        --     local params = vim.lsp.util.make_position_params(0, client.offset_encoding)
+		-- ["textDocument/inlahHint"] = function (client)
+		--     local params = vim.lsp.util.make_position_params(0, client.offset_encoding)
 
-        --     local handler = function(err, result, ctx, config)
-        --       ctx.params = params
-        --       print(ctx)
-        --     end
-        --     client.request('textDocument/inlahHint', params, handler)
-        -- end
+		--     local handler = function(err, result, ctx, config)
+		--       ctx.params = params
+		--       print(ctx)
+		--     end
+		--     client.request('textDocument/inlahHint', params, handler)
+		-- end
 	},
-    organize_imports_on_format = true,
-    -- csharp = {
-    --     inlayHints = {parameters = {enabled = true }}
-    -- }
+	organize_imports_on_format = true,
+	-- csharp = {
+	--     inlayHints = {parameters = {enabled = true }}
+	-- }
 })
 
 rt.setup({
 	tools = {
 		inlay_hints = {
 			auto = true,
+			only_current_line = true,
 		},
 	},
 })
@@ -227,9 +228,10 @@ lsp.configure("pyright", {
 			disableLanguageServices = true,
 			disableOrganizeImports = true,
 			analysis = {
-				diagnosticMode = "off",
+				diagnosticMode = "workspace",
 				typeCheckingMode = "off",
 				logLevel = "Information",
+				autoSearchPaths = true,
 			},
 		},
 	},
@@ -250,12 +252,12 @@ lsp.setup()
 
 ----------- Linting---------------------
 local null_ls = require("null-ls")
-local null_opts = lsp.build_options('null-ls', {})
+local null_opts = lsp.build_options("null-ls", {})
 
 null_ls.setup({
-    on_attach = function (c, b)
-        null_opts.on_attach(c, b)
-    end,
+	on_attach = function(c, b)
+		null_opts.on_attach(c, b)
+	end,
 	sources = {
 		null_ls.builtins.code_actions.refactoring,
 		null_ls.builtins.completion.spell,
@@ -318,7 +320,7 @@ vim.keymap.set(
 
 require("mason-null-ls").setup({
 	ensure_installed = nil,
-	automatic_installation = true,
+	automatic_installation = { exclude = { "rustfmt" } },
 })
 
 vim.diagnostic.config({
