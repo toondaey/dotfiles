@@ -64,8 +64,9 @@ return require("packer").startup(function(use)
 		end,
 	})
 	use("m4xshen/autoclose.nvim")
-	use("editorconfig/editorconfig-vim")
+	-- use("editorconfig/editorconfig-vim")
 	--use { 'tamton-aquib/flirt.nvim' }
+	use("gpanders/editorconfig.nvim")
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 	-- packer
 	use({
@@ -73,46 +74,46 @@ return require("packer").startup(function(use)
 		requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
 	})
 	use("nvim-telescope/telescope-project.nvim")
-	use({
-		"rest-nvim/rest.nvim",
-		requires = { "nvim-lua/plenary.nvim" },
-		config = function()
-			require("rest-nvim").setup({
-				-- Open request results in a horizontal split
-				result_split_horizontal = false,
-				-- Keep the http file buffer above|left when split horizontal|vertical
-				result_split_in_place = false,
-				-- Skip SSL verification, useful for unknown certificates
-				skip_ssl_verification = false,
-				-- Encode URL before making request
-				encode_url = true,
-				-- Highlight request on run
-				highlight = {
-					enabled = true,
-					timeout = 150,
-				},
-				result = {
-					-- toggle showing URL, HTTP info, headers at top the of result window
-					show_url = true,
-					show_http_info = true,
-					show_headers = true,
-					-- executables or functions for formatting response body [optional]
-					-- set them to false if you want to disable them
-					formatters = {
-						json = "jq",
-						html = function(body)
-							return vim.fn.system({ "tidy", "-i", "-q", "-" }, body)
-						end,
-					},
-				},
-				-- Jump to request line on run
-				jump_to_request = false,
-				env_file = ".env",
-				custom_dynamic_variables = {},
-				yank_dry_run = true,
-			})
-		end,
-	})
+	-- use({
+	--     "rest-nvim/rest.nvim",
+	--     requires = { "nvim-lua/plenary.nvim" },
+	--     config = function()
+	--         require("rest-nvim").setup({
+	--             -- Open request results in a horizontal split
+	--             result_split_horizontal = false,
+	--             -- Keep the http file buffer above|left when split horizontal|vertical
+	--             result_split_in_place = false,
+	--             -- Skip SSL verification, useful for unknown certificates
+	--             skip_ssl_verification = false,
+	--             -- Encode URL before making request
+	--             encode_url = true,
+	--             -- Highlight request on run
+	--             highlight = {
+	--                 enabled = true,
+	--                 timeout = 150,
+	--             },
+	--             result = {
+	--                 -- toggle showing URL, HTTP info, headers at top the of result window
+	--                 show_url = true,
+	--                 show_http_info = true,
+	--                 show_headers = true,
+	--                 -- executables or functions for formatting response body [optional]
+	--                 -- set them to false if you want to disable them
+	--                 formatters = {
+	--                     json = "jq",
+	--                     html = function(body)
+	--                         return vim.fn.system({ "tidy", "-i", "-q", "-" }, body)
+	--                     end,
+	--                 },
+	--             },
+	--             -- Jump to request line on run
+	--             jump_to_request = false,
+	--             env_file = ".env",
+	--             custom_dynamic_variables = {},
+	--             yank_dry_run = true,
+	--         })
+	--     end,
+	-- })
 	use({ "kkharji/sqlite.lua" })
 	use({
 		"nvim-telescope/telescope-frecency.nvim",
@@ -208,33 +209,43 @@ return require("packer").startup(function(use)
 		requires = "nvim-lua/plenary.nvim",
 	})
 	use({ "jay-babu/mason-null-ls.nvim" })
-    use({
-        "pwntester/octo.nvim",
-        requires = {
-            "nvim-lua/plenary.nvim",
-            "nvim-telescope/telescope.nvim",
-            "nvim-tree/nvim-web-devicons",
-        }
-    })
+	use({
+		"pwntester/octo.nvim",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope.nvim",
+			"nvim-tree/nvim-web-devicons",
+		},
+	})
 	use("qnighy/lalrpop.vim")
 	use("Decodetalkers/csharpls-extended-lsp.nvim")
-	use({
-		"glepnir/dashboard-nvim",
-		event = "VimEnter",
-		config = function()
-			require("dashboard").setup({
-				-- config
-			})
-		end,
-		dependencies = { { "nvim-tree/nvim-web-devicons" } },
-	})
+	-- use({
+	--     "glepnir/dashboard-nvim",
+	--     event = "VimEnter",
+	--     config = function()
+	--         require("dashboard").setup({
+	--             -- config
+	--         })
+	--     end,
+	--     dependencies = { { "nvim-tree/nvim-web-devicons" } },
+	-- })
 	use({
 		"nvim-lualine/lualine.nvim",
 		requires = { "nvim-tree/nvim-web-devicons", opt = true },
 	})
 	use({ "akinsho/bufferline.nvim", tag = "*", requires = "nvim-tree/nvim-web-devicons" })
 	use({ "VidocqH/lsp-lens.nvim" })
-    use ({ 'nvim-telescope/telescope-media-files.nvim', requires = {'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim'}})
-    use ('mattn/emmet-vim')
-    use "lukas-reineke/indent-blankline.nvim"
+	use({ "nvim-telescope/telescope-media-files.nvim", requires = { "nvim-lua/popup.nvim", "nvim-lua/plenary.nvim" } })
+	use("mattn/emmet-vim")
+	use("lukas-reineke/indent-blankline.nvim")
+	use("mhinz/vim-startify")
+	use({
+		"kylechui/nvim-surround",
+		tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+		config = function()
+			require("nvim-surround").setup({
+				-- Configuration here, or leave empty to use defaults
+			})
+		end,
+	})
 end)

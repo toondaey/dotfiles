@@ -146,3 +146,5 @@ export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export SDK_ROOT=$(xcrun --sdk macosx --show-sdk-path)

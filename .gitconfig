@@ -27,9 +27,9 @@
     hunk-header-file-style = red
     hunk-header-line-number-style = "#067a00"
     hunk-header-style = file line-number syntax
-[url "ssh://git@github.com/"]
+[url "git@github.com:"]
         insteadOf = https://github.com/
 [alias]
-	com = commit -S -s -a
-	pul = pull -S --signoff --rebase
-	mer = merge -S --signoff
+	com = commit -S -a
+	pul = pull -S --rebase
+	mer = merge -S
