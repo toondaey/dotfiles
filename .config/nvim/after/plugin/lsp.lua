@@ -18,18 +18,6 @@ lsp.ensure_installed({
 -- (Optional) Configure lua language server for neovim
 lsp.nvim_workspace()
 
--- require("lsp-lens").setup({
---     enable = true,
---     include_declaration = false, -- Reference include declaration
---     sections = { -- Enable / Disable specific request
---         definition = true,
---         references = true,
---         implementation = true,
---     },
---     ignore_filetype = {
---         "prisma",
---     },
--- })
 local cmp = require("cmp")
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lsp.defaults.cmp_mappings({
@@ -107,12 +95,6 @@ lsp.configure("tsserver", {
 		},
 	},
 })
-
--- lsp.configure("csharp_ls", {
---     handlers = {
---         ["textDocument/definition"] = require("csharpls_extended").handler,
---     },
--- })
 
 lsp.configure("omnisharp", {
 	on_attach = function(client, buffer)
@@ -238,49 +220,17 @@ lsp.configure("pyright", {
 })
 
 vim.lsp.set_log_level("info")
-lsp.format_mapping("gq", {
-	format_opts = {
-		async = false,
-		timeout_ms = 10000,
-	},
-	servers = {
-		["null-ls"] = { "javascript", "typescript", "lua", "python", "csharp", "go" },
-	},
-})
+-- lsp.format_mapping("gq", {
+--     format_opts = {
+--         async = false,
+--         timeout_ms = 10000,
+--     },
+--     servers = {
+--         ["null-ls"] = { "javascript", "typescript", "lua", "python", "csharp", "go" },
+--     },
+-- })
 
 lsp.setup()
-
------------ Linting---------------------
-local null_ls = require("null-ls")
-local null_opts = lsp.build_options("null-ls", {})
-
-null_ls.setup({
-	on_attach = function(c, b)
-		null_opts.on_attach(c, b)
-	end,
-	sources = {
-		null_ls.builtins.code_actions.refactoring,
-		null_ls.builtins.completion.spell,
-
-		null_ls.builtins.formatting.stylua,
-		-- null_ls.builtins.formatting.isort.with({ prefer_local='.venv/bin' }),
-		null_ls.builtins.formatting.black.with({ prefer_local = ".venv/bin" }),
-		null_ls.builtins.formatting.rustfmt,
-		null_ls.builtins.formatting.csharpier,
-		null_ls.builtins.formatting.goimports_reviser,
-
-		null_ls.builtins.diagnostics.eslint,
-		null_ls.builtins.diagnostics.mypy.with({ prefer_local = ".venv/bin" }),
-		null_ls.builtins.diagnostics.ruff.with({ prefer_local = ".venv/bin" }),
-		null_ls.builtins.diagnostics.actionlint,
-		null_ls.builtins.diagnostics.buf,
-		null_ls.builtins.diagnostics.commitlint,
-		null_ls.builtins.diagnostics.dotenv_linter,
-		null_ls.builtins.diagnostics.editorconfig_checker,
-		null_ls.builtins.diagnostics.hadolint,
-		null_ls.builtins.diagnostics.golangci_lint,
-	},
-})
 
 local trouble = require("trouble")
 
@@ -317,11 +267,6 @@ vim.keymap.set(
 	"<cmd>TroubleToggle lsp_references<cr>",
 	{ silent = true, noremap = true, desc = "Toggle trouble with lsp_references" }
 )
-
-require("mason-null-ls").setup({
-	ensure_installed = nil,
-	automatic_installation = { exclude = { "rustfmt" } },
-})
 
 vim.diagnostic.config({
 	virtual_text = true,

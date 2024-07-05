@@ -9,7 +9,7 @@ return require("packer").startup(function(use)
 
 	use({
 		"nvim-telescope/telescope.nvim",
-		tag = "0.1.2",
+		tag = "0.1.x",
 		-- or                            , branch = '0.1.x',
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
@@ -159,11 +159,6 @@ return require("packer").startup(function(use)
 	})
 	use("jbyuki/instant.nvim")
 	use({
-		"shiradofu/refresh.nvim",
-		requires = "nvim-lua/plenary.nvim",
-		run = "./refresh.sh restart",
-	})
-	use({
 		"ruifm/gitlinker.nvim",
 		requires = "nvim-lua/plenary.nvim",
 	})
@@ -204,11 +199,11 @@ return require("packer").startup(function(use)
 		},
 	})
 	use("nanotee/sqls.nvim")
-	use({
-		"jose-elias-alvarez/null-ls.nvim",
-		requires = "nvim-lua/plenary.nvim",
-	})
-	use({ "jay-babu/mason-null-ls.nvim" })
+	-- use({
+	--     "jose-elias-alvarez/null-ls.nvim",
+	--     requires = "nvim-lua/plenary.nvim",
+	-- })
+	-- use({ "jay-babu/mason-null-ls.nvim" })
 	use({
 		"pwntester/octo.nvim",
 		requires = {
@@ -248,4 +243,21 @@ return require("packer").startup(function(use)
 			})
 		end,
 	})
+	use("semanticart/tag-peek.vim")
+	use({
+		"kndndrj/nvim-dbee",
+		requires = {
+			"MunifTanjim/nui.nvim",
+		},
+		run = function()
+			-- Install tries to automatically detect the install method.
+			-- if it fails, try calling it with one of these parameters:
+			--    "curl", "wget", "bitsadmin", "go"
+			require("dbee").install()
+		end,
+		config = function()
+			require("dbee").setup( --[[optional config]])
+		end,
+	})
+    use 'mfussenegger/nvim-lint'
 end)
