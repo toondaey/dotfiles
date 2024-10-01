@@ -1,4 +1,22 @@
-vim.g.vimspector_enable_mappings = 'VISUAL_STUDIO'
+-- Remaps for the refactoring operations currently offered by the plugin
+vim.keymap.set("v", "<leader>re", function () require('refactoring').refactor('Extract Function') end, {noremap = true, silent = true, expr = false})
+vim.keymap.set("v", "<leader>rf", function () require('refactoring').refactor('Extract Function To File') end, {noremap = true, silent = true, expr = false})
+vim.keymap.set("v", "<leader>rv", function () require('refactoring').refactor('Extract Variable') end, {noremap = true, silent = true, expr = false})
+vim.keymap.set("v", "<leader>ri", function () require('refactoring').refactor('Inline Variable') end, {noremap = true, silent = true, expr = false})
+
+-- Extract block doesn't need visual mode
+vim.keymap.set("n", "<leader>rb", function () require('refactoring').refactor('Extract Block') end, {noremap = true, silent = true, expr = false})
+vim.keymap.set("n", "<leader>rbf", function () require('refactoring').refactor('Extract Block To File') end, {noremap = true, silent = true, expr = false})
+
+-- Inline variable can also pick up the identifier currently under the cursor without visual mode
+vim.keymap.set("n", "<leader>ri", function () require('refactoring').refactor('Inline Variable') end, {noremap = true, silent = true, expr = false})
+
+vim.keymap.set("n", "<leader>tt", vim.cmd.TestNearest, {silent = true})
+vim.keymap.set("n", "<leader>T", vim.cmd.TestFile, {silent = true})
+vim.keymap.set("n", "<leader>a", vim.cmd.TestSuite, {silent = true})
+vim.keymap.set("n", "<leader>l", vim.cmd.TestLast, {silent = true})
+vim.keymap.set("n", "<leader>g", vim.cmd.TestVisit, {silent = true})
+
 
 vim.keymap.set("n", "<F5>", [[:call vimspector#Continue()<CR>]], {silent = false})
 vim.keymap.set("i", "<F5>", [[<Esc>:call vimspector#Continue()<CR>==gi]], {silent = false})
@@ -39,3 +57,4 @@ vim.keymap.set("i", "<•>", [[<Esc>:call vimspector#Disassemble()<CR>==gi]], {s
 
 vim.keymap.set("n", "<leader>di", vim.cmd.VimspectorBalloonEval, {silent = false})
 vim.keymap.set("x", "<leader>di", vim.cmd.VimspectorBalloonEval, {silent = false})
+
