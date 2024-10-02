@@ -1,8 +1,17 @@
 return {{
     'projekt0n/github-nvim-theme',
     name = 'github-theme',
-    config = true
-}, {
+    lazy = false,
+    priority = 1000,
+    config=true
+},
+{
+    "LazyVim/LazyVim",
+    opts = {
+        colorscheme = "github_dark_default"
+    }
+}, 
+{
     "SmiteshP/nvim-navic",
     config = function()
         require("nvim-navic").setup {

@@ -50,8 +50,10 @@ return {{
         "editorconfig/editorconfig-vim", "gpanders/editorconfig.nvim", "vim-test/vim-test", {
     "toppair/peek.nvim",
     build = "deno task --quiet build:fast"
-}, "lvimuser/lsp-inlayhints.nvim", "folke/zen-mode.nvim", {"stevearc/dressing.nvim", config = true }, "timonv/vim-cargo",
-        "tpope/vim-rhubarb", "m4xshen/smartcolumn.nvim", -- use { 'mfussenegger/nvim-dap' }
+}, "lvimuser/lsp-inlayhints.nvim", "folke/zen-mode.nvim", {
+    "stevearc/dressing.nvim",
+    config = true
+}, "timonv/vim-cargo", "tpope/vim-rhubarb", "m4xshen/smartcolumn.nvim", -- use { 'mfussenegger/nvim-dap' }
 'mrcjkb/rustaceanvim', {
     "neoclide/npm.nvim",
     dependencies = {"Shougo/denite.nvim"}
@@ -69,31 +71,7 @@ return {{
         "m00qek/baleia.nvim",
         version = "v1.3.0"
     }}
-}, "nanotee/sqls.nvim", -- {
---     "jose-elias-alvarez/null-ls.nvim",
---     dependencies = "nvim-lua/plenary.nvim",
--- },
--- "jay-babu/mason-null-ls.nvim",
--- function(_, opts)
---     local trouble = require("trouble")
---     local symbols = trouble.statusline({
---         mode = "lsp_document_symbols",
---         groups = {},
---         title = false,
---         filter = {
---             range = true
---         },
---         format = "{kind_icon}{symbol.name:Normal}",
---         -- The following line is needed to fix the background color
---         -- Set it to the lualine section you want to use
---         hl_group = "lualine_c_normal"
---     })
---     -- table.insert(opts.sections.lualine_c, {
---     --     symbols.get,
---     --     cond = symbols.has
---     -- })
--- end
-"lukas-reineke/indent-blankline.nvim", "mhinz/vim-startify", {
+}, "nanotee/sqls.nvim", "lukas-reineke/indent-blankline.nvim", "mhinz/vim-startify", {
     "kylechui/nvim-surround",
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     config = true
@@ -101,5 +79,7 @@ return {{
     "kndndrj/nvim-dbee",
     dependencies = {"MunifTanjim/nui.nvim"},
     config = true
-    -- }, 'mfussenegger/nvim-lint'
+}, 'mfussenegger/nvim-lint', {
+    "nvim-neo-tree/neo-tree.nvim",
+    enable = false
 }}

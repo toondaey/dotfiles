@@ -58,3 +58,5 @@ vim.keymap.set("i", "<•>", [[<Esc>:call vimspector#Disassemble()<CR>==gi]], {s
 vim.keymap.set("n", "<leader>di", vim.cmd.VimspectorBalloonEval, {silent = false})
 vim.keymap.set("x", "<leader>di", vim.cmd.VimspectorBalloonEval, {silent = false})
 
+-- close current buffer without deleting
+vim.keymap.set("n", "<C-x>", ":bw<CR>", { silent = true })
