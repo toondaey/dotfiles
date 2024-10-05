@@ -11,10 +11,15 @@ return {{
 {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
-    dependencies = {{'L3MON4D3/LuaSnip'}},
+    dependencies = {{
+        "L3MON4D3/LuaSnip",
+        -- follow latest release.
+        version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+        -- install jsregexp (optional!).
+        build = "make install_jsregexp"
+    }},
     config = function()
         local cmp = require('cmp')
-
         cmp.setup({
             sources = {{
                 name = 'nvim_lsp'
@@ -36,17 +41,22 @@ return {{
     'neovim/nvim-lspconfig',
     cmd = {'LspInfo', 'LspInstall', 'LspStart'},
     event = {'BufReadPre', 'BufNewFile'},
-    dependencies = {{'hrsh7th/cmp-nvim-lsp'}, {'williamboman/mason.nvim'}, {'williamboman/mason-lspconfig.nvim'}},
+    dependencies = {{'hrsh7th/cmp-nvim-lsp'}, {"hrsh7th/cmp-buffer"}, {"hrsh7th/cmp-path"},
+                    {'saadparwaiz1/cmp_luasnip'}, {'hrsh7th/cmp-nvim-lua'}, {'L3MON4D3/LuaSnip'},
+                    {'rafamadriz/friendly-snippets'}, {'williamboman/mason.nvim'}, {"nanotee/sqls.nvim"},
+                    {'williamboman/mason-lspconfig.nvim'}, {
+        'mrcjkb/rustaceanvim',
+        version = '^5', -- Recommended
+        lazy = false -- This plugin is already lazy
+    }, {"Hoffs/omnisharp-extended-lsp.nvim"}, {"lvimuser/lsp-inlayhints.nvim"}},
     config = function()
         local lsp_zero = require('lsp-zero')
-
         -- lsp_attach is where you enable features that only work
         -- if there is a language server active in the file
         local lsp_attach = function(client, bufnr)
             local opts = {
                 buffer = bufnr
             }
-
             vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
             vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
             vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
@@ -58,13 +68,12 @@ return {{
             vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
             vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
         end
-
         lsp_zero.extend_lspconfig({
-            sign_text = true,
+            capabilities = require('cmp_nvim_lsp').default_capabilities(),
             lsp_attach = lsp_attach,
-            capabilities = require('cmp_nvim_lsp').default_capabilities()
+            -- float_border = 'rounded', -- Disabled because it interfares with noice
+            sign_text = true
         })
-
         require('mason-lspconfig').setup({
             -- lsp_zero.default_setup,
             ensure_installed = {"lua_ls", "ts_ls", "eslint", "pyright", "omnisharp"},
@@ -85,7 +94,6 @@ return {{
                         on_attach = function(client, bufnr)
                             local util = require("lspconfig/util")
                             local path = util.path
-
                             -- From: https://github.com/IceS2/dotfiles/blob/master/nvim/lua/plugins_cfg/mason_ls_and_dap.lua
                             local function get_python_path(workspace)
                                 -- Use activated virtualenv.
@@ -93,7 +101,6 @@ return {{
                                     local venv_path = vim.env.VIRTUAL_ENV or vim.fn.glob(path.join(workspace, ".venv"))
                                     return path.join(venv_path, "bin", "python")
                                 end
-
                                 -- Find and use virtualenv in workspace directory.
                                 for _, pattern in ipairs({"*", ".*"}) do
                                     local match = vim.fn.glob(path.join(workspace, pattern, ".python-local"))
@@ -102,20 +109,17 @@ return {{
                                             "python")
                                     end
                                 end
-
                                 -- Fallback to system Python.
                                 return exepath("python3") or exepath("python") or "python"
                             end
-
-                            local function get_venv(workspace)
-                                for _, pattern in ipairs({"*", ".*"}) do
-                                    local match = vim.fn.glob(path.join(workspace, pattern, ".python-local"))
-                                    if match ~= "" then
-                                        return match
-                                    end
-                                end
-                            end
-
+                            -- local function get_venv(workspace)
+                            --     for _, pattern in ipairs({"*", ".*"}) do
+                            --         local match = vim.fn.glob(path.join(workspace, pattern, ".python-local"))
+                            --         if match ~= "" then
+                            --             return match
+                            --         end
+                            --     end
+                            -- end
                             client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
                         end,
                         settings = {
@@ -155,8 +159,121 @@ return {{
                         organize_imports_on_format = true
                     })
                 end,
+                sqls = function(client, bufnr)
+                    require('lspconfig').sqls.setup {
+                        on_attach = function(client, bufnr)
+                            require('sqls').on_attach(client, bufnr)
+                        end
+                    }
+                end,
                 rust_analyzer = lsp_zero.noop
             }
         })
+        vim.g.rustaceanvim = {
+            server = {
+                default_settings = lsp_zero.get_capabilities()
+            }
+        }
+        local cmp = require('cmp')
+        local cmp_action = lsp_zero.cmp_action()
+        local cmp_format = lsp_zero.cmp_format()
+        require('luasnip.loaders.from_vscode').lazy_load()
+        vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+        cmp.setup({
+            sources = {{
+                name = 'path'
+            }, {
+                name = 'nvim_lsp'
+            }, {
+                name = 'nvim_lua'
+            }, {
+                name = 'buffer',
+                keyword_length = 3
+            }, {
+                name = 'luasnip',
+                keyword_length = 2
+            }},
+            snippet = {
+                expand = function(args)
+                    require('luasnip').lsp_expand(args.body)
+                end
+            },
+            mapping = cmp.mapping.preset.insert({
+                -- confirm completion item
+                ['<CR>'] = cmp.mapping.confirm({
+                    select = false
+                }),
+                -- toggle completion menu
+                ['<C-e>'] = cmp_action.toggle_completion(),
+                -- tab complete
+                ['<Tab>'] = cmp_action.tab_complete(),
+                ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+                -- navigate between snippet placeholder
+                ['<C-d>'] = cmp_action.luasnip_jump_forward(),
+                ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+                -- scroll documentation window
+                ['<C-f>'] = cmp.mapping.scroll_docs(-5),
+                ['<C-u>'] = cmp.mapping.scroll_docs(5)
+            }),
+            window = {
+                documentation = cmp.config.window.bordered()
+            },
+            preselect = 'item',
+            completion = {
+                completeopt = 'menu,menuone,noinsert'
+            },
+            formatting = cmp_format
+        })
+        -- Restart LSP server
+        vim.keymap.set("n", "<leader>lrs", vim.cmd.LspRestart, {
+            silent = false
+        })
     end
-}}
+} -- {
+--     "hrsh7th/nvim-cmp",
+--     dependencies = {"hrsh7th/cmp-emoji"},
+--     ---@param opts cmp.ConfigSchema
+--     opts = function(_, opts)
+--         table.insert(opts.sources, {
+--             name = "emoji"
+--         })
+--         local has_words_before = function()
+--             unpack = unpack or table.unpack
+--             local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+--             return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+--         end
+--         local cmp = require("cmp")
+--         opts.mapping = vim.tbl_extend("force", opts.mapping, {
+--             ["<Tab>"] = cmp.mapping(function(fallback)
+--                 if cmp.visible() then
+--                     -- You could replace select_next_item() with confirm({ select = true }) to get VS Code autocompletion behavior
+--                     cmp.select_next_item()
+--                 elseif vim.snippet.active({
+--                     direction = 1
+--                 }) then
+--                     vim.schedule(function()
+--                         vim.snippet.jump(1)
+--                     end)
+--                 elseif has_words_before() then
+--                     cmp.complete()
+--                 else
+--                     fallback()
+--                 end
+--             end, {"i", "s"}),
+--             ["<S-Tab>"] = cmp.mapping(function(fallback)
+--                 if cmp.visible() then
+--                     cmp.select_prev_item()
+--                 elseif vim.snippet.active({
+--                     direction = -1
+--                 }) then
+--                     vim.schedule(function()
+--                         vim.snippet.jump(-1)
+--                     end)
+--                 else
+--                     fallback()
+--                 end
+--             end, {"i", "s"})
+--         })
+--     end
+-- }
+}

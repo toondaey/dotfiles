@@ -60,3 +60,7 @@ vim.keymap.set("x", "<leader>di", vim.cmd.VimspectorBalloonEval, {silent = false
 
 -- close current buffer without deleting
 vim.keymap.set("n", "<C-x>", ":bw<CR>", { silent = true })
+
+-- Extra yanking features
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { silent = true, desc = "Yank to clipboard", noremap = true })
+vim.keymap.set("n", "<leader>Y", [["+Y]])

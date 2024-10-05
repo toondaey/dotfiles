@@ -1,4 +1,5 @@
-return {{
+return {
+    {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
     dependencies = {'nvim-lua/plenary.nvim', "folke/trouble.nvim", {
@@ -100,10 +101,10 @@ return {{
                     ignore_patterns = {"*.git", "node_modules", "target", "obj", "bin", ".venv"}
                 },
                 ["ui-select"] = {require("telescope.themes").get_dropdown({})},
-                workspaces = {
-                    -- keep insert mode after selection in the picker, default is false
-                    keep_insert = true
-                }
+                -- workspaces = {
+                --     -- keep insert mode after selection in the picker, default is false
+                --     keep_insert = true
+                -- }
             }
         })
 
@@ -111,7 +112,7 @@ return {{
         telescope.load_extension("file_browser")
         telescope.load_extension("project")
         telescope.load_extension("ui-select")
-        telescope.load_extension("workspaces")
+        -- telescope.load_extension("workspaces")
         telescope.load_extension("media_files")
 
         local trouble = require("trouble")
@@ -185,41 +186,41 @@ return {{
             noremap = true,
             desc = "Search all files in current workspace"
         })
-        vim.keymap.set("n", "<leader>gb", builtin.git_branches, {
-            silent = true,
-            noremap = true,
-            desc = "Search all git branches of current workspace"
-        })
-        vim.keymap.set("n", "<leader>gc", builtin.git_commits, {
-            silent = true,
-            noremap = true,
-            desc = "See all git commits of current 'git' workspace"
-        })
-        vim.keymap.set("n", "<leader>gf", builtin.git_files, {
-            silent = true,
-            noremap = true,
-            desc = "See all git files "
-        })
-        vim.keymap.set("n", "<leader>fg", builtin.live_grep, {
-            silent = true,
-            noremap = true,
-            desc = "Live grep of texts in current workspace"
-        })
-        vim.keymap.set("n", "<leader>fb", builtin.buffers, {
-            silent = true,
-            noremap = true,
-            desc = "All buffers currently open."
-        })
-        vim.keymap.set("n", "<leader>fh", builtin.help_tags, {
-            silent = true,
-            noremap = true,
-            desc = "Help with all available functions and commands"
-        })
-        vim.keymap.set("n", "<leader>fc", builtin.commands, {
-            silent = true,
-            noremap = true,
-            desc = "See all commands"
-        })
+        -- vim.keymap.set("n", "<leader>gb", builtin.git_branches, {
+        --     silent = true,
+        --     noremap = true,
+        --     desc = "Search all git branches of current workspace"
+        -- })
+        -- vim.keymap.set("n", "<leader>gc", builtin.git_commits, {
+        --     silent = true,
+        --     noremap = true,
+        --     desc = "See all git commits of current 'git' workspace"
+        -- })
+        -- vim.keymap.set("n", "<leader>gf", builtin.git_files, {
+        --     silent = true,
+        --     noremap = true,
+        --     desc = "See all git files "
+        -- })
+        -- vim.keymap.set("n", "<leader>fg", builtin.live_grep, {
+        --     silent = true,
+        --     noremap = true,
+        --     desc = "Live grep of texts in current workspace"
+        -- })
+        -- vim.keymap.set("n", "<leader>fb", builtin.buffers, {
+        --     silent = true,
+        --     noremap = true,
+        --     desc = "All buffers currently open."
+        -- })
+        -- vim.keymap.set("n", "<leader>fh", builtin.help_tags, {
+        --     silent = true,
+        --     noremap = true,
+        --     desc = "Help with all available functions and commands"
+        -- })
+        -- vim.keymap.set("n", "<leader>fc", builtin.commands, {
+        --     silent = true,
+        --     noremap = true,
+        --     desc = "See all commands"
+        -- })
         vim.keymap.set("n", "<leader>tb", builtin.treesitter, {
             silent = true,
             noremap = true,
@@ -239,23 +240,23 @@ return {{
             silent = true,
             desc = "Fuzzy finder in current buffer"
         })
-        vim.keymap.set("n", "<C-p>", function()
-            telescope.extensions.project.project()
-        end, {
-            noremap = true,
-            silent = true,
-            desc = "Change project"
-        })
-        vim.keymap.set("n", "<leader><leader>", function()
-            telescope.extensions.frecency.frecency({
-                workspace = "CWD"
-            })
-        end, {
-            noremap = true,
-            silent = true,
-            desc = "Frecency"
-        })
-        vim.keymap.set("n", "<leader>cf", function()
+        -- vim.keymap.set("n", "<C-p>", function()
+        --     telescope.extensions.project.project()
+        -- end, {
+        --     noremap = true,
+        --     silent = true,
+        --     desc = "Change project"
+        -- })
+        -- vim.keymap.set("n", "<leader><leader>", function()
+        --     telescope.extensions.frecency.frecency({
+        --         workspace = "CWD"
+        --     })
+        -- end, {
+        --     noremap = true,
+        --     silent = true,
+        --     desc = "Frecency"
+        -- })
+        vim.keymap.set("n", "<leader>cg", function()
             telescope.extensions.file_browser.file_browser({
                 path = "%:p:h",
                 select_buffer = true
@@ -266,4 +267,5 @@ return {{
             desc = "Open file_browser with the path of the current buffer"
         })
     end
-}}
+}
+}

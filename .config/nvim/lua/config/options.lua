@@ -23,3 +23,6 @@ vim.g.NERDSpaceDelims = 1
 vim.g.vimspector_enable_mappings = 'VISUAL_STUDIO'
 vim.g.airline = {}
 vim.g["airline#extensions#tabline#enabled"] = 1
+
+
+-- LazyVim specific

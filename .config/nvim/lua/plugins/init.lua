@@ -35,51 +35,52 @@ return {{
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 1000
-}, -- "ThePrimeagen/harpoon", 
--- "mbbill/undotree",
-"tpope/vim-dadbod", "kristijanhusak/vim-dadbod-ui", "kristijanhusak/vim-dadbod-completion", {
-    "L3MON4D3/LuaSnip",
-    -- follow latest release.
-    version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-    -- install jsregexp (optional!).
-    build = "make install_jsregexp"
 }, {
-    "preservim/nerdcommenter",
-    cmd = "PlugInstall"
-}, "ryanoasis/vim-devicons", "vim-airline/vim-airline", "vim-airline/vim-airline-themes",
-        "editorconfig/editorconfig-vim", "gpanders/editorconfig.nvim", "vim-test/vim-test", {
+    'kristijanhusak/vim-dadbod-ui',
+    dependencies = {{
+        'tpope/vim-dadbod',
+        lazy = true
+    }, {
+        'kristijanhusak/vim-dadbod-completion',
+        ft = {'sql', 'mysql', 'plsql'},
+        lazy = true
+    } -- Optional
+    },
+    cmd = {'DBUI', 'DBUIToggle', 'DBUIAddConnection', 'DBUIFindBuffer'},
+    init = function()
+        -- Your DBUI configuration
+        vim.g.db_ui_use_nerd_fonts = 1
+    end
+}, "ryanoasis/vim-devicons", "editorconfig/editorconfig-vim",{
     "toppair/peek.nvim",
-    build = "deno task --quiet build:fast"
-}, "lvimuser/lsp-inlayhints.nvim", "folke/zen-mode.nvim", {
-    "stevearc/dressing.nvim",
-    config = true
-}, "timonv/vim-cargo", "tpope/vim-rhubarb", "m4xshen/smartcolumn.nvim", -- use { 'mfussenegger/nvim-dap' }
-'mrcjkb/rustaceanvim', {
-    "neoclide/npm.nvim",
-    dependencies = {"Shougo/denite.nvim"}
-}, "jbyuki/instant.nvim", -- Or with configuration
+    event = { "VeryLazy" },
+    build = "deno task --quiet build:fast",
+    config = function()
+        require("peek").setup()
+        vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
+        vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
+    end,
+},
+ "tpope/vim-rhubarb",{
+  "m4xshen/smartcolumn.nvim",
+  opts = {}
+},
+-- "jbyuki/instant.nvim", -- Or with configuration
 {
-    "projekt0n/github-nvim-theme",
-    branch = "0.0.x",
-    config = true
-}, {
     "mg979/vim-visual-multi",
     branch = "master"
-}, "Hoffs/omnisharp-extended-lsp.nvim", "puremourning/vimspector", {
-    "samodostal/image.nvim",
-    dependencies = {"nvim-lua/plenary.nvim", {
-        "m00qek/baleia.nvim",
-        version = "v1.3.0"
-    }}
-}, "nanotee/sqls.nvim", "lukas-reineke/indent-blankline.nvim", "mhinz/vim-startify", {
-    "kylechui/nvim-surround",
-    version = "*", -- Use for stability; omit to use `main` branch for the latest features
-    config = true
 }, {
-    "kndndrj/nvim-dbee",
-    dependencies = {"MunifTanjim/nui.nvim"},
-    config = true
-}, 'mfussenegger/nvim-lint', {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    ---@module "ibl"
+    ---@type ibl.config
+    opts = {},
+},
+-- 'mfussenegger/nvim-lint',
+        {
     "nvim-neo-tree/neo-tree.nvim",
-    enable = false
+    enabled = false
+}, {
+    "folke/flash.nvim",
+    enabled = false
 }}
