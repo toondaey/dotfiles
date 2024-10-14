@@ -8,7 +8,7 @@ return {
     }, "nvim-telescope/telescope-file-browser.nvim", "nvim-telescope/telescope-project.nvim",
                     "nvim-telescope/telescope-frecency.nvim", "nvim-telescope/telescope-ui-select.nvim",
                     "nvim-telescope/telescope-media-files.nvim"},
-    config = function()
+    opts = function()
         local telescope = require("telescope")
         local builtin = require("telescope.builtin")
         local trouble_source = require("trouble.sources.telescope")
@@ -115,64 +115,64 @@ return {
         -- telescope.load_extension("workspaces")
         telescope.load_extension("media_files")
 
-        local trouble = require("trouble")
-        vim.keymap.set("n", "<leader>xx", "<cmd>Trouble split_right toggle focus=true<cr>", {
-            silent = true,
-            noremap = true,
-            desc = "Toggle trouble."
-        })
-        vim.keymap.set("n", "<leader>xw", "<cmd>Trouble diagnostics toggle focus=true<cr>", {
-            silent = true,
-            noremap = true,
-            desc = "Toggle trouble workspace diagnostics."
-        })
-        vim.keymap.set("n", "<leader>xX", "<cmd>Trouble preview_float toggle focus=true filter.buf=0<cr>", {
-            silent = true,
-            noremap = true,
-            desc = "Toggle trouble for current buffer."
-        })
-        vim.keymap.set("n", "<leader>xl", "<cmd>Trouble loclist toggle<cr>", {
-            silent = true,
-            noremap = true,
-            desc = "Toggle trouble loclist"
-        })
-        vim.keymap.set("n", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", {
-            silent = true,
-            noremap = true,
-            desc = "Toggle trouble with a quick fix"
-        })
-        vim.keymap.set("n", "<leader>xL", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>")
-        vim.keymap.set("n", "<leader>cS", "<cmd>Trouble symbols toggle focus=false<cr>")
+        -- local trouble = require("trouble")
+        -- vim.keymap.set("n", "<leader>xx", "<cmd>Trouble split_right toggle focus=true<cr>", {
+        --     silent = true,
+        --     noremap = true,
+        --     desc = "Toggle trouble."
+        -- })
+        -- vim.keymap.set("n", "<leader>xw", "<cmd>Trouble diagnostics toggle focus=true<cr>", {
+        --     silent = true,
+        --     noremap = true,
+        --     desc = "Toggle trouble workspace diagnostics."
+        -- })
+        -- vim.keymap.set("n", "<leader>xX", "<cmd>Trouble preview_float toggle focus=true filter.buf=0<cr>", {
+        --     silent = true,
+        --     noremap = true,
+        --     desc = "Toggle trouble for current buffer."
+        -- })
+        -- vim.keymap.set("n", "<leader>xl", "<cmd>Trouble loclist toggle<cr>", {
+        --     silent = true,
+        --     noremap = true,
+        --     desc = "Toggle trouble loclist"
+        -- })
+        -- vim.keymap.set("n", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", {
+        --     silent = true,
+        --     noremap = true,
+        --     desc = "Toggle trouble with a quick fix"
+        -- })
+        -- vim.keymap.set("n", "<leader>xL", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>")
+        -- vim.keymap.set("n", "<leader>cS", "<cmd>Trouble symbols toggle focus=false<cr>")
 
-        trouble.setup({
-            modes = {
-                preview_float = {
-                    mode = "diagnostics",
-                    preview = {
-                        type = "float",
-                        relative = "editor",
-                        border = "rounded",
-                        title = "Preview",
-                        title_pos = "center",
-                        position = {0, -2},
-                        size = {
-                            width = 0.45,
-                            height = 0.45
-                        },
-                        zindex = 200
-                    }
-                },
-                split_right = {
-                    mode = "diagnostics",
-                    preview = {
-                        type = "split",
-                        relative = "win",
-                        position = "right",
-                        size = 0.3
-                    }
-                }
-            }
-        })
+        -- trouble.setup({
+        --     modes = {
+        --         preview_float = {
+        --             mode = "diagnostics",
+        --             preview = {
+        --                 type = "float",
+        --                 relative = "editor",
+        --                 border = "rounded",
+        --                 title = "Preview",
+        --                 title_pos = "center",
+        --                 position = {0, -2},
+        --                 size = {
+        --                     width = 0.45,
+        --                     height = 0.45
+        --                 },
+        --                 zindex = 200
+        --             }
+        --         },
+        --         split_right = {
+        --             mode = "diagnostics",
+        --             preview = {
+        --                 type = "split",
+        --                 relative = "win",
+        --                 position = "right",
+        --                 size = 0.3
+        --             }
+        --         }
+        --     }
+        -- })
 
         -- telescope.extensions.file_browser = finder
 
@@ -201,11 +201,11 @@ return {
         --     noremap = true,
         --     desc = "See all git files "
         -- })
-        -- vim.keymap.set("n", "<leader>fg", builtin.live_grep, {
-        --     silent = true,
-        --     noremap = true,
-        --     desc = "Live grep of texts in current workspace"
-        -- })
+        vim.keymap.set("n", "<leader>/", builtin.live_grep, {
+            silent = true,
+            noremap = true,
+            desc = "Live grep of texts in current workspace"
+        })
         -- vim.keymap.set("n", "<leader>fb", builtin.buffers, {
         --     silent = true,
         --     noremap = true,
@@ -240,13 +240,13 @@ return {
             silent = true,
             desc = "Fuzzy finder in current buffer"
         })
-        -- vim.keymap.set("n", "<C-p>", function()
-        --     telescope.extensions.project.project()
-        -- end, {
-        --     noremap = true,
-        --     silent = true,
-        --     desc = "Change project"
-        -- })
+        vim.keymap.set("n", "<leader>fp", function()
+            telescope.extensions.project.project()
+        end, {
+            noremap = true,
+            silent = true,
+            desc = "Change project"
+        })
         -- vim.keymap.set("n", "<leader><leader>", function()
         --     telescope.extensions.frecency.frecency({
         --         workspace = "CWD"

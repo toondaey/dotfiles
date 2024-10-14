@@ -1,5 +1,13 @@
-return {
---     {
+return {{
+    "gbprod/yanky.nvim",
+    opts = {
+
+        system_clipboard = {
+            sync_with_ring = false,
+            clipboard_register = nil
+        }
+    }
+} --     {
 --     "kevinhwang91/nvim-ufo",
 --     dependencies = {"kevinhwang91/promise-async"},
 --     config = function()
@@ -86,10 +94,8 @@ return {
 --     ---@type ibl.config
 --     opts = {},
 --     config = function()
-
 --         local highlight = {"RainbowRed", "RainbowYellow", "RainbowBlue", "RainbowOrange", "RainbowGreen",
 --                            "RainbowViolet", "RainbowCyan"}
-
 --         local hooks = require "ibl.hooks"
 --         -- create the highlight groups in the highlight setup hook, so they are reset
 --         -- every time the colorscheme changes

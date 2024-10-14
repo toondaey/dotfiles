@@ -48,8 +48,8 @@ return {{
         'mrcjkb/rustaceanvim',
         version = '^5', -- Recommended
         lazy = false -- This plugin is already lazy
-    }, {"Hoffs/omnisharp-extended-lsp.nvim"}, {"lvimuser/lsp-inlayhints.nvim"}},
-    config = function()
+    }, {"Hoffs/omnisharp-extended-lsp.nvim"}, {"lvimuser/lsp-inlayhints.nvim"}, { "hrsh7th/cmp-emoji" }},
+    opts = function()
         local lsp_zero = require('lsp-zero')
         -- lsp_attach is where you enable features that only work
         -- if there is a language server active in the file
@@ -192,7 +192,7 @@ return {{
             }, {
                 name = 'luasnip',
                 keyword_length = 2
-            }},
+            }, { name = "emoji" }},
             snippet = {
                 expand = function(args)
                     require('luasnip').lsp_expand(args.body)
