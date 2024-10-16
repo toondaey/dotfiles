@@ -140,7 +140,6 @@ export PATH="$PATH:/Users/babatunde.aromire@cognitedata.com/.executables"
 export PATH="$PATH:/usr/local/mysql-connector-odbc-8.0.33-macos13-arm64/bin"
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 
-eval $(thefuck --alias)
 export PATH="$PATH:/opt/homebrew/opt/qt@5/bin"
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
